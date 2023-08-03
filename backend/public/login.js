@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 const myForm = document.getElementById('my-form');
 
 const emailInput = document.getElementById('email');
@@ -17,28 +15,37 @@ function onSubmit(event) {
     };
     console.log(inputData);
     
-    try {
-        const response = axios.post("http://localhost:3000/user/login", inputData)
-        if(response.request.status == 200) {
+    // try {
+    //     const response = axios.post("http://localhost:3000/user/login", inputData)
+    //     if(response.request.status == 200) {
+    //         alert(response.data.message);
+    //         window.location.href = "./signup.html";
+    //     }
+    //     else{
+    //         throw new Error ("Failed To Login, Try Again!")
+    //     }
+    // }
+    // catch(err) {
+    //     console.log(err);
+    //     console.log(err.response.data.message);
+    //     document.body.innerHTML+=`<div style="color:red;">${err.response.data.message}<div>`;
+    // }
+
+    axios.post("http://localhost:3000/user/login", inputData)
+    .then((response) => {
+        if(response.request.status == 201) {
             alert(response.data.message);
             window.location.href = "./signup.html";
         }
         else{
             throw new Error ("Failed To Login, Try Again!")
         }
-    }
-    catch(err) {
+    })
+    .catch((err) => {
         console.log(err);
         console.log(err.response.data.message);
-        document.body.innerHTML+=`<div style="color:red;">${err.response.data.message}<div>`;
-    }
-    // const response = axios.post("http://localhost:3000/user/login", inputData)
-    // .then((response) => {
-    //     if(response.request.status == 201) {
-    //         alert(response.data.message);
-    //         window.location.href = "./signup.html";
-    //     }
-    // })
+        document.body.innerHTML+=`<div style="color:red;">${err.response.data.message}<div>`; 
+    })
     emailInput.value='';
     passwordInput.value = ''; 
 }
