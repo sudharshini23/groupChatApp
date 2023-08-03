@@ -33,9 +33,11 @@ function onSubmit(event) {
 
     axios.post("http://localhost:3000/user/login", inputData)
     .then((response) => {
+        console.log(response);
         if(response.request.status == 201) {
             alert(response.data.message);
-            window.location.href = "./signup.html";
+            localStorage.setItem('token',response.data.token);
+            window.location.href = "./mainpage.html";
         }
         else{
             throw new Error ("Failed To Login, Try Again!")
