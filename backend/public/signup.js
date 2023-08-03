@@ -23,19 +23,33 @@ function onSubmit(event) {
 
     console.log(inputData);
 
-    axios.post("http://localhost:3000/user/signup", inputData)
-    .then((response) => {
+    try {
+        const response = axios.post("http://localhost:3000/user/signup", inputData)
         console.log(response);
-        if(response.request.status == 201) {
+        if(response.request.status == 200) {
             alert(response.data.message);
             window.location.href="./login.html";
         }
-    })
-    .catch((err) => {
+    }
+    catch(err) {
         console.log(err);
         console.log(err.response.data.message);
         document.body.innerHTML+=`<div style="color:red;">${err.response.data.message}<div>`; 
-    })
+    }
+
+    // axios.post("http://localhost:3000/user/signup", inputData)
+    // .then((response) => {
+    //     console.log(response);
+    //     if(response.request.status == 200) {
+    //         alert(response.data.message);
+    //         window.location.href="./login.html";
+    //     }
+    // })
+    // .catch((err) => {
+    //     console.log(err);
+    //     console.log(err.response.data.message);
+    //     document.body.innerHTML+=`<div style="color:red;">${err.response.data.message}<div>`; 
+    // })
     nameInput.value = '';
     emailInput.value='';
     numberInput.value = '';  
