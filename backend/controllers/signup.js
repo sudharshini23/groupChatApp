@@ -19,7 +19,7 @@ exports.postSignUp = async(req,res,next) => {
         const users = await User.findAll();
         for(let i = 0; i < users.length; i++) {
             if(users[i].email == email) {
-                return res.status(400).json({message: "User Already Exists!", success: false });
+                return res.status(403).json({message: "User Already Exists! Please Login", success: false });
             }
         }
         if(isStringEmpty(name) || isStringEmpty(email) || isStringEmpty(password)) {
@@ -34,7 +34,7 @@ exports.postSignUp = async(req,res,next) => {
                 password: hash
             }, {transaction: t});
             await t.commit();
-            res.status(200).json({message:"Successfully created New User",success:true});
+            res.status(200).json({message:"New User Created Successfully",success:true});
         })
     }
     catch(err) {
