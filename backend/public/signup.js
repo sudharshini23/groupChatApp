@@ -26,7 +26,7 @@ function onSubmit(event) {
     try {
         const response = axios.post("http://localhost:3000/user/signup", inputData)
         console.log(response);
-        if(response.request.status == 201) {
+        if(response.request.status == 200) {
             alert(response.data.message);
             window.location.href="./login.html";
         }
