@@ -34,7 +34,7 @@ exports.postSignUp = async(req,res,next) => {
                 password: hash
             }, {transaction: t});
             await t.commit();
-            res.status(200).json({message:"New User Created Successfully",success:true});
+            res.status(201).json({message:"New User Created Successfully",success:true});
         })
     }
     catch(err) {
