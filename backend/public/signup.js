@@ -23,19 +23,19 @@ function onSubmit(event) {
 
     console.log(inputData);
 
-    try {
-        const response = axios.post("http://localhost:3000/user/signup", inputData)
+    axios.post("http://localhost:3000/user/signup", inputData)
+    .then((response) => {
         console.log(response);
-        if(response.request.status === 201) {
+        if(response.request.status == 201) {
             alert(response.data.message);
             window.location.href="./login.html";
         }
-    }
-    catch(err) {
+    })
+    .catch((err) => {
         console.log(err);
         console.log(err.response.data.error);
         document.body.innerHTML+=`<div style="color:red;">${err.response.data.error}<div>`; 
-    }
+    })
     nameInput.value = '';
     emailInput.value='';
     passwordInput.value = '';  
