@@ -10,5 +10,6 @@ const msgAuth = require('../middleware/authentication');
 router.post('/signup', signupController.postSignUp);
 router.post('/login', loginController.postLogin);
 router.post('/message', msgAuth.authenticate, msgController.postMessage)
+router.get('/get-message', msgAuth.authenticate, msgController.getMessage)
 
 module.exports = router;
