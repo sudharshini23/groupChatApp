@@ -37,6 +37,8 @@ function onSubmit(event) {
         if(response.request.status == 201) {
             alert(response.data.message);
             localStorage.setItem('token',response.data.token);
+            console.log(response.data.user);
+            localStorage.setItem('username', response.data.user.name);
             window.location.href = "./mainpage.html";
         }
         else{

@@ -9,6 +9,7 @@ const Message = sequelize.define('message', {
         primaryKey: true
     },
     message: Sequelize.STRING,
+    username: Sequelize.STRING,
 })
 
 module.exports = Message

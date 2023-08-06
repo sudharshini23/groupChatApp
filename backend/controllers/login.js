@@ -12,8 +12,8 @@ function isStringEmpty(str) {
     }
 }
 
-function generateAccessToken(id) {
-    return jwt.sign({id: id}, process.env.JWT_token);
+function generateAccessToken(id, name) {
+    return jwt.sign({id: id, username: name}, process.env.JWT_token);
 }
 
 exports.postLogin = async(req,res,next) => {
@@ -30,7 +30,8 @@ exports.postLogin = async(req,res,next) => {
                     throw new Error("Something went Wrong!")
                 }
                 if(result == true){
-                    res.status(201).json({success: true, message: "Login Successful!", token: generateAccessToken(user[0].id)})
+                    console.log(user[0]);
+                    res.status(201).json({success: true, user: user[0], message: "Login Successful!", token: generateAccessToken(user[0].id, user[0].name)})
                 }
                 else {
                     res.status(401).json({success: false, message: "Password is Incorrect!"})
