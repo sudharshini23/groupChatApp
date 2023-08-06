@@ -13,7 +13,7 @@ function isStringEmpty(str) {
 }
 
 function generateAccessToken(id, name) {
-    return jwt.sign({id: id, username: name}, process.env.JWT_token);
+    return jwt.sign({userId: id, username: name}, process.env.JWT_token);
 }
 
 exports.postLogin = async(req,res,next) => {

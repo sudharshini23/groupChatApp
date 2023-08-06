@@ -7,9 +7,9 @@ const token = localStorage.getItem('token');
 window.addEventListener("DOMContentLoaded", () => {
     // setInterval(() => {
         let msg = JSON.parse(localStorage.getItem('message'));
-        showMessage(msg);
+        // showMessage(msg);
         let msgid=0;
-        if(msg.length==0){
+        if(msg ==null || msg==undefined){
             msgid=undefined;
         }else{
             msgid = msg[msg.length-1].id;
@@ -17,10 +17,11 @@ window.addEventListener("DOMContentLoaded", () => {
         axios.get(`http://localhost:3000/user/get-message/?messageid=${msgid}`, {headers: {"Authorization":token}})
         .then((response) => {
             console.log(response);
-            // showMessage(response.data.allMessage, response.data.user.name);
+            showMessage(response.data.allMessage);
             localStorage.setItem('message',JSON.stringify(response.data.allMessage));
         })
         .catch((err) => {console.log(err)});
+        showMessage(msg);
     // }, 1000)
 })
 

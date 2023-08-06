@@ -6,7 +6,7 @@ const {Sequelize} = require('sequelize');
 
 
 function generateAccessToken(id, name) {
-    return jwt.sign({userId: id, username: name}, process.env.JWT_token);
+    return jwt.sign({userId: id, name: name}, process.env.JWT_token);
 }
 
 exports.getMessage = async(req,res,next) => {
