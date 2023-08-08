@@ -49,9 +49,10 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 })
 
-async function fetchMessagesAndShowToUser(groupId, intervalId) {
+async function fetchMessagesAndShowToUser(groupId) {
     try {
-        localStorage.setItem('intervalId', intervalId);
+        // localStorage.setItem('intervalId', intervalId);
+        console.log("try groupid", groupId);
         let oldMessages = JSON.parse(localStorage.getItem('messages'));
         let lastMsgId;
         let messages;
@@ -66,13 +67,16 @@ async function fetchMessagesAndShowToUser(groupId, intervalId) {
         }
         const res = await axios.get(`http://localhost:3000/message/fetchNewMsgs/?lastMsgId=${lastMsgId}&groupId=${groupId}`);
         if(res.status === 200){
-            // console.log('this piece is executed');
+            console.log("Inside this fetch", groupId);
+            // console.log("Inside this fetch", intervalId);
+            console.log(res.data.messages);
+            console.log('this piece is executed');
             const newMessages = res.data.messages;
             messages = oldMessages.concat(newMessages);
             if(messages.length > 10){
                 messages = messages.slice(messages.length - 10, messages.length);
             }
-            // console.log('messages', messages);
+            console.log('messages in frontend', messages);
         }
         let currentMsgs = [];
         for(let i =0 ; i < messages.length; i++) {
@@ -96,7 +100,7 @@ function showChatToUser(messages) {
             // chatBody.innerHTML += message.from+': '+ message.message + `<br>`;
             chatul.innerHTML += `
                 <p>
-                    ${message.from}: ${message.message}
+                    ${message.username}: ${message.message}
                 </p>
                 <br>
             `;
@@ -155,10 +159,10 @@ chatList.onclick = async (e) => {
     e.preventDefault();
     try {
         e.target.classList.add('active');
-        const previousIntervalId = localStorage.getItem('intervalId');
-        if(previousIntervalId) {
-            clearInterval(previousIntervalId);
-        }
+        // const previousIntervalId = localStorage.getItem('intervalId');
+        // if(previousIntervalId) {
+        //    clearInterval(previousIntervalId);
+        // }
         if(e.target.nodeName === 'BUTTON') {
             const groupId = e.target.parentElement.children[0].id;
             sessionStorage.setItem('addToGroup', groupId);
@@ -178,9 +182,13 @@ chatList.onclick = async (e) => {
                 localStorage.setItem('groupId', groupId);
                 resolve();
             });
-            const intervalId = setInterval(() => {
-                fetchMessagesAndShowToUser(groupId, intervalId);
-            }, 1000);
+            // const intervalId = 
+            // setInterval(() => {
+                // console.log("This is in chat", groupId);
+                // console.log("This is fr interval cjhat", intervalId);
+                fetchMessagesAndShowToUser(groupId);
+            // }, 
+            //1000);
         }
     }
     catch (error) {

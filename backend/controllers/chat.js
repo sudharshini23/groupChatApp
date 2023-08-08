@@ -11,6 +11,12 @@ exports.addParticipant = async(req,res,next) => {
             return res.status(204).json({message: 'email is not registered'});
         }
         const newGroup = await req.user.createGroup();
+        await newGroup.addUser(req.user, {
+            through: {isAdmin: true}
+        });
+        await newGroup.addUser(user, {
+            through: {isAdmin: false}
+        });
         res.status(200).json({group: newGroup, message: 'added new user to group'})
     }
     catch(error) {
@@ -71,6 +77,8 @@ exports.getMembers = async(req,res,next) => {
                     ...newPart
                 }
                 membersToSend.push(userToSend);
+                console.log("chat file newPart", newPart);
+                console.log("chat file useringroup",userInGroupUser);
             }
         }
         res.status(200).json({members: membersToSend});

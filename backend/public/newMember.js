@@ -16,7 +16,7 @@ document.getElementById('add-member-form').onsubmit = async(e) => {
         console.log(res);
         if(res.status === 200) {
             confirm(res.data.message);
-            window.location.href = 'chat.html';
+            window.location.href = 'mainpage.html';
         }
     }
     catch(error) {
