@@ -34,7 +34,7 @@ exports.setGroupName = async(req,res,next) => {
     }
     catch(error) {
         console.log(error);
-        res.status(500).json({message: 'something wen wrong'});
+        res.status(500).json({message: 'something went wrong'});
     }
 }
 
@@ -65,6 +65,7 @@ exports.getMembers = async(req,res,next) => {
             if(user) {
                 let newPart = {};
                 const userInGroupUser = await GroupUser.findOne({where: {[Op.and]: [{userId: user.id}, {groupId: groupId}]}})
+                newPart['isAdmin'] = userInGroupUser.isAdmin;
                 const userToSend = {
                     ...user,
                     ...newPart

@@ -16,22 +16,22 @@ function generateAccessToken(id, name) {
     return jwt.sign({userId: id, username: name}, process.env.JWT_token);
 }
 
-exports.addUser = async(res,res,next) => {
+exports.addUser = async(req,res,next) => {
     const t = await sequelize.transaction();
     try {
-        const {name,email,phone,password} = req.body;
+        const {name,email,number,password} = req.body;
         const users = await User.findAll();
         for(let i=0;i<users.length;i++) {
             if(users[i].email==email) {
                 return res.status(403).json({message:"User Already Exist!",success:false});
             }
         }
-        if(isStringEmpty(name)||isStringEmpty(email)||isStringEmpty(password)||isStringEmpty(phone)){
+        if(isStringEmpty(name)||isStringEmpty(email)||isStringEmpty(password)||isStringEmpty(number)){
             return res.status(400).json({message:"All Fields Are Mandatory",success:false});
         }
         const saltrounds=10;
         bcrypt.hash(password,saltrounds,async(err,hash)=> {
-            await User.create({name:name,email:email,phone:phone,password:hash},{transaction:t});
+            await User.create({name:name,email:email,number:number,password:hash},{transaction:t});
             await t.commit();
             res.status(200).json({message:"New User Created",success:true});
         })

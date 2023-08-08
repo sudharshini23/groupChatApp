@@ -31,7 +31,7 @@ exports.postLogin = async(req,res,next) => {
                 }
                 if(result == true){
                     console.log(user[0]);
-                    res.status(201).json({success: true, user: user[0], message: "Login Successful!", token: generateAccessToken(user[0].id, user[0].name)})
+                    res.status(200).json({success: true, user: user[0], message: "Login Successful!", token: generateAccessToken(user[0].id, user[0].name)})
                 }
                 else {
                     res.status(401).json({success: false, message: "Password is Incorrect!"})

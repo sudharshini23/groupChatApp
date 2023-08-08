@@ -14,7 +14,7 @@ document.getElementById('group-name-form').onsubmit = async (e) => {
         console.log('naming grp response', res);
         if(res.status === 200) {
             confirm('Created New Group.');
-            window.location.href = 'chat.html'
+            window.location.href = 'mainpage.html'
         }
     }
     catch(error) {
