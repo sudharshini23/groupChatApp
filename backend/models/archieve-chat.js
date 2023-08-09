@@ -8,10 +8,6 @@ const Archieve = sequelize.define('archievechats', {
         allowNull: false,
         primaryKey: true
     },
-    message: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
 })
 
 module.exports = Archieve;

@@ -32,20 +32,6 @@ app.use(cors({
 app.use(bodyParser.json());
 
 
-User.hasMany(Message);
-Message.belongsTo(User);
-
-Group.belongsToMany(User, {through: GroupUser});
-User.belongsToMany(Group, {through: GroupUser});
-
-Group.hasMany(Message);
-Message.belongsTo(Group);
-
-User.hasMany(Forgotpassword);
-Forgotpassword.belongsTo(User);
-
-Group.hasMany(Files);
-
 const userRoutes = require('./routes/user');
 const messageRoutes = require('./routes/messages');
 const chatRoutes = require('./routes/chat');
