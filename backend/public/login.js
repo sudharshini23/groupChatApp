@@ -39,9 +39,10 @@ async function onSubmit(event) {
         }
     }
 
-    forgotBtn.onclick = async (e) => {
-        window.location.href = 'forgot.html';
-    }
+    // forgotBtn.onclick = async (e) => {
+    //     console.log("Hello forgot password")
+    //     window.location.href = 'forgot.html';
+    // }
     
 
 

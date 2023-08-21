@@ -12,18 +12,19 @@ const tranEmailApi = new Sib.TransactionalEmailsApi();
 exports.forgotPassword = async(req,res,next) => {
     try {
         const email = req.body.email;
+        console.log(req.body);
         const user = await User.findOne({where:{email: email }});
         if(!user) {
             return res.status(404).json({message:'Could Not Find User'});
         }
-        if(user[0].email==email){
+        // if(user[0].email==email){
             
-        }
-        await user.createForgotpassword({ id , active: true });
+        // }
+        await user.createForgotpassword({ id: uuid , userId: user.id, active: true });
             
-        const client = Sib.ApiClient.instance;
-        const apiKey = client.authentications['api-key'];
-        apiKey.apiKey = sendinbluekey;
+        // const client = Sib.ApiClient.instance;
+        // const apiKey = client.authentications['api-key'];
+        // apiKey.apiKey = process.env.SENDINBLUE_API_KEY;
 
         const sender = {
             email: process.env.EMAIL,
@@ -43,7 +44,7 @@ exports.forgotPassword = async(req,res,next) => {
                 sender,
                 to: receivers,
                 htmlContent: `
-                    <a href="${baseUrl}/password/resetpassword/${id}">Reset password</a>
+                    <a href="http:3000/localhost/password/resetpassword/${uuid}">Reset password</a>
                 `
         })
         res.status(200).json({message:'Reset Password link has been sent to your E-mail'});
@@ -68,7 +69,7 @@ exports.resetPassword = async(req,res,next) => {
                                                     console.log('called')
                                                 }
                                             </script>
-                                            <form action="${baseUrl}/password/updatepassword/${id}" method="get">
+                                            <form action="http:3000/localhost/password/updatepassword/${id}" method="get">
                                                 <label for="newpassword">Enter New password</label>
                                                 <input name="newpassword" type="password" required></input>
                                                 <button>reset password</button>
